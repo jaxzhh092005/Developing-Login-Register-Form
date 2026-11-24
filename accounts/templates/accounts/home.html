@@ -1,0 +1,16 @@
+{% extends "accounts/base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<section class="card card--solo">
+  <h1>Hello, {{ user.first_name|default:user.username }}</h1>
+  <p class="card__sub">
+    You are signed in as {{ user.email }}.<br>
+    Role: {% for g in user.groups.all %}{{ g.name }}{% if not forloop.last %}, {% endif %}{% empty %}none{% endfor %}
+  </p>
+  {% if perms.accounts.view_all_profiles %}
+    <a href="{% url 'members' %}" class="btn btn--submit">View all members</a>
+  {% else %}
+    <p class="card__sub">Your role does not include access to the members list.</p>
+  {% endif %}
+</section>
+{% endblock %}

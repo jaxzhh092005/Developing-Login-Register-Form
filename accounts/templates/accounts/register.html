@@ -1,0 +1,45 @@
+{% extends "accounts/base.html" %}
+{% load static %}
+{% block title %}Create account{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <img src="{% static 'accounts/img/pebbles.jpg' %}" alt="Smooth grey pebbles">
+</section>
+
+<section class="card">
+  <h1>Create account</h1>
+  <p class="card__sub">Fill in your details to get started.</p>
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {% if form.non_field_errors %}<p class="error">{{ form.non_field_errors }}</p>{% endif %}
+
+    {% for field in form.visible_fields %}
+      {% if field.name == "agree" %}
+        <label class="check">
+          {{ field }}
+          <span>I agree to the Terms and Privacy Policy</span>
+        </label>
+      {% elif field.name == "password1" or field.name == "password2" %}
+        <div class="field field--password">
+          {{ field }}
+          <button type="button" class="toggle" data-target="{{ field.id_for_label }}">Show</button>
+        </div>
+      {% else %}
+        <div class="field">{{ field }}</div>
+      {% endif %}
+      {% for e in field.errors %}<p class="error">{{ e }}</p>{% endfor %}
+    {% endfor %}
+
+    <button type="submit" class="btn btn--submit">Register</button>
+  </form>
+
+  <p class="card__foot">Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+</section>
+{% endblock %}
+
+{% block scripts %}
+{% load static %}
+<script src="{% static 'accounts/js/register.js' %}"></script>
+{% endblock %}

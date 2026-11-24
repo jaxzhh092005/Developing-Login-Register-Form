@@ -1,0 +1,35 @@
+{% extends "accounts/base.html" %}
+{% load static %}
+{% block title %}Log in{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <img src="{% static 'accounts/img/pebbles.jpg' %}" alt="Smooth grey pebbles">
+</section>
+
+<section class="card">
+  <h1>Welcome back</h1>
+  <p class="card__sub">Log in to your account.</p>
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}">
+    {% if form.non_field_errors %}<p class="error">Incorrect email/username or password.</p>{% endif %}
+
+    <div class="field">{{ form.username }}</div>
+    <div class="field field--password">
+      {{ form.password }}
+      <button type="button" class="toggle" data-target="{{ form.password.id_for_label }}">Show</button>
+    </div>
+
+    <p class="forgot"><a href="{% url 'password_reset' %}">Forgot password?</a></p>
+    <button type="submit" class="btn btn--submit">Log in</button>
+  </form>
+
+  <p class="card__foot">Don’t have an account? <a href="{% url 'register' %}">Register</a></p>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'accounts/js/register.js' %}"></script>
+{% endblock %}

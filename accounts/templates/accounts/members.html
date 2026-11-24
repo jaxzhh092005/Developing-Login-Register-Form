@@ -1,0 +1,21 @@
+{% extends "accounts/base.html" %}
+{% block title %}Members{% endblock %}
+{% block content %}
+<section class="card card--wide">
+  <h1>Members</h1>
+  <p class="card__sub">Only roles with the “view all profiles” permission can see this page.</p>
+  <table class="table">
+    <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Role</th></tr></thead>
+    <tbody>
+    {% for m in members %}
+      <tr>
+        <td>{{ m.get_full_name|default:"—" }}</td>
+        <td>{{ m.email }}</td>
+        <td>{{ m.profile.phone|default:"—" }}</td>
+        <td>{% for g in m.groups.all %}{{ g.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

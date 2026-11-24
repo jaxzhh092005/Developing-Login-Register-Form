@@ -1,0 +1,9 @@
+{% extends "accounts/base.html" %}
+{% block title %}Access denied{% endblock %}
+{% block content %}
+<section class="card card--solo">
+  <h1>403 – Access denied</h1>
+  <p class="card__sub">You are logged in, but your role is not allowed to view this page.</p>
+  <a href="{% url 'home' %}" class="btn btn--submit">Back to home</a>
+</section>
+{% endblock %}
